@@ -3,16 +3,15 @@ import {
   Get,
   Post,
   Body,
-  Patch,
   Param,
   HttpException,
+  ParseIntPipe,
 } from '@nestjs/common';
 
 import { VehicleTypesService } from '@/vehicle-types/vehicle-types.service';
 import { ProductsService } from '@/products/products.service';
 import { InsuranceQuotesService } from './insurance-quotes.service';
 import { CreateInsuranceQuoteDto } from './dto/create-insurance-quote.dto';
-import { UpdateInsuranceQuoteDto } from './dto/update-insurance-quote.dto';
 
 @Controller('insurance-quotes')
 export class InsuranceQuotesController {
@@ -42,15 +41,7 @@ export class InsuranceQuotesController {
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.insuranceQuotesService.findOne(+id);
-  }
-
-  @Patch(':id')
-  update(
-    @Param('id') id: string,
-    @Body() updateInsuranceQuoteDto: UpdateInsuranceQuoteDto,
-  ) {
-    return this.insuranceQuotesService.update(+id, updateInsuranceQuoteDto);
+  findOne(@Param('id', ParseIntPipe) id: number) {
+    return this.insuranceQuotesService.findOne(id);
   }
 }

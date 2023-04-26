@@ -4,7 +4,6 @@ import { firstValueFrom } from 'rxjs';
 
 import { InsuranceQuote } from './interfaces/insurance-quote.interface';
 import { CreateInsuranceQuoteDto } from './dto/create-insurance-quote.dto';
-import { UpdateInsuranceQuoteDto } from './dto/update-insurance-quote.dto';
 
 @Injectable()
 export class InsuranceQuotesService {
@@ -18,19 +17,10 @@ export class InsuranceQuotesService {
     return data;
   }
 
-  findAll() {
-    return `This action returns all insuranceQuotes`;
-  }
-
-  findOne(id: number) {
-    return `This action returns a #${id} insuranceQuote`;
-  }
-
-  update(id: number, updateInsuranceQuoteDto: UpdateInsuranceQuoteDto) {
-    return `This action updates a #${id} insuranceQuote`;
-  }
-
-  remove(id: number) {
-    return `This action removes a #${id} insuranceQuote`;
+  async findOne(id: number): Promise<InsuranceQuote> {
+    const { data } = await firstValueFrom(
+      this.httpService.get(`/insurance-quotes/${id}`),
+    );
+    return data;
   }
 }
